@@ -6,9 +6,12 @@ import shutil
 
 KINOA_DIR = '__kinoa__'
 
-def save(files, experiment_name='', scores={}, comments='', 
-    update_html_flag=True):
+
+def save(files, experiment_name='', scores={}, comments='',
+         update_html_flag=True):
     '''
+    Function to save experiment.
+    
     Inputs:
         files - list of files to save or string
         experiment_name - name of experiment
@@ -22,24 +25,19 @@ def save(files, experiment_name='', scores={}, comments='',
     if len(experiment_name) == 0:
         experiment_name = experiment_datetime
 
-    working_dir = os.path.join(KINOA_DIR, experiment_datetime + 
-        ' ' + experiment_name)
+    working_dir = os.path.join(KINOA_DIR, experiment_datetime +
+                               ' ' + experiment_name)
     if not os.path.exists(working_dir):
         os.makedirs(working_dir)
 
     # Copy files
     if isinstance(files, list):
         for file in files:
-            # if os.path.isfile(file):
-            #     src = file
-            #     dst = os.path.join(KINOA_DIR, file.split())
-            #     dir_util.copy_tree(file, )
-            # print(file, os.path.join(KINOA_DIR, file))
             shutil.copy(file, os.path.join(working_dir, file))
 
     # Prepare experiment description
     experiment_dict = {
-        'experiment_name': experiment_name, 
+        'experiment_name': experiment_name,
         'experiment_datetime': experiment_datetime,
         'comments': comments
     }
@@ -65,4 +63,3 @@ def update_html():
     Function to generate update report in html.
     '''
     pass
-
