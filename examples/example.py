@@ -1,4 +1,4 @@
-import kinoa
+from kinoa import kinoa
 
 import numpy as np
 
