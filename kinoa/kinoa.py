@@ -8,7 +8,7 @@ KINOA_DIR = '__kinoa__'
 
 
 def save(files, experiment_name='', scores={}, comments='',
-         update_html_flag=True):
+         update_html_flag=True, working_dir=''):
     '''
     Function to save experiment.
     
@@ -25,8 +25,13 @@ def save(files, experiment_name='', scores={}, comments='',
     if len(experiment_name) == 0:
         experiment_name = experiment_datetime
 
-    working_dir = os.path.join(KINOA_DIR, experiment_datetime +
-                               ' ' + experiment_name)
+    if len(working_dir) == 0:
+        if experiment_name != experiment_datetime:
+            working_dir = os.path.join(KINOA_DIR, experiment_datetime +
+                                   ' ' + experiment_name)
+        else:
+            working_dir = os.path.join(KINOA_DIR, experiment_datetime)
+
     if not os.path.exists(working_dir):
         os.makedirs(working_dir)
 
