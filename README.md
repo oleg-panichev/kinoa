@@ -1,6 +1,9 @@
 # Kinoa
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg?style=for-the-badge)](https://github.com/oleg-panichev/kinoa)
 
-Kinoa - a simple library to store your code and produced files after each run. It allows monitor and easely compare experiments with your code. 
+Kinoa - a simple library to store your code and produced files after each run. It allows monitor, easily compare  and reproduce experiments with your code.
+
+Tested on Python 3.6.1 only. 
 
 ## Installation
 ```sh
@@ -35,7 +38,7 @@ def save(files, experiment_name='', params={}, scores={}, comments='', working_d
 - **params** - dictionary with parameters of experiment.
 - **scores** - dictionary with evaluation results.
 - **comments** - string with comments to the experiment.
-- **working_dir** - directory where log of experiments will be stored. *\__kinoa\__* directory will be created within working_dir.
+- **working_dir** - directory where log of experiments will be stored. *\_\_kinoa\_\_* directory will be created within working_dir.
 
 See [examples/example.py](https://github.com/oleg-panichev/Kinoa/blob/master/examples/example.py) for more details.
 
