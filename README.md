@@ -1,5 +1,5 @@
 # Kinoa
-[![GitHub release](https://img.shields.io/badge/Version-0.0.1-blue.svg)](https://github.com/oleg-panichev/kinoa)
+[![GitHub release](https://img.shields.io/badge/Version-0.0.1-blue.svg?style=for-the-badge)](https://github.com/oleg-panichev/kinoa)
 
 Kinoa - a simple library to store your code and produced files after each run. It allows monitor, easily compare  and reproduce experiments with your code.
 
