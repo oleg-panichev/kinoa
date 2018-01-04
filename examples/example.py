@@ -57,6 +57,9 @@ def example_lr():
     scores['roc_auc'] = roc_auc
     scores['kaggle'] = np.nan
 
+    other = {}
+    other['some_value'] = 13
+
     comments = 'Example with Logistic Regression.'
 
     kinoa.save(
@@ -64,8 +67,13 @@ def example_lr():
         experiment_name=experiment_name,
         params=params,
         scores=scores,
+        other=other,
         comments=comments,
-        update_html_flag=True
+        update_html_flag=True,
+        working_dir='', 
+        sort_log_by='experiment_datetime', 
+        sort_log_ascending=True,
+        columns_order=[]
     )
 
 
@@ -106,6 +114,9 @@ def example_dt():
     scores['roc_auc'] = roc_auc
     scores['kaggle'] = np.nan
 
+    other = {}
+    other['some_value'] = 42
+
     comments = 'Example with Decision Tree Classifier.'
 
     kinoa.save(
@@ -113,8 +124,13 @@ def example_dt():
         experiment_name=experiment_name,
         params=params,
         scores=scores,
+        other=other,
         comments=comments,
-        update_html_flag=True
+        update_html_flag=True,
+        working_dir='', 
+        sort_log_by='experiment_datetime', 
+        sort_log_ascending=True,
+        columns_order={'scores.kaggle': -1}
     )
 
 
