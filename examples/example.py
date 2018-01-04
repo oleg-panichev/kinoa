@@ -24,7 +24,11 @@ def example_lr():
     X_train, X_test, y_train, y_test = generate_data()
 
     # Train Logistic regression model
-    model = LogisticRegression()
+    model_params = {
+        'C': 1.0,
+        'max_iter': 100,
+    }
+    model = LogisticRegression(**model_params)
     model.fit(X_train, y_train)
 
     # Make predictions
@@ -36,20 +40,29 @@ def example_lr():
     roc_auc = roc_auc_score(y_test, p)
 
     # Save experiment results with kinoa
-    files = ['example.py']
+    files = [
+        'example.py',
+        'example_directory_0',
+        'example_directory_1/example_file_in_directory_0.txt'
+    ]
 
     experiment_name = 'Logistic Regression'
+
+    params = {}
+    for k in model_params:
+        params['lr.' + str(k)] = model_params[k]
 
     scores = {}
     scores['fbeta_score'] = fbeta
     scores['roc_auc'] = roc_auc
-    scores['kaggle'] = 'Unknown'
+    scores['kaggle'] = np.nan
 
     comments = 'Example with Logistic Regression.'
 
     kinoa.save(
         files,
         experiment_name=experiment_name,
+        params=params,
         scores=scores,
         comments=comments,
         update_html_flag=True
@@ -60,7 +73,11 @@ def example_dt():
     X_train, X_test, y_train, y_test = generate_data()
 
     # Train Logistic regression model
-    model = DecisionTreeClassifier()
+    model_params = {
+        'max_depth': 6,
+        'min_samples_split': 2,
+    }
+    model = DecisionTreeClassifier(**model_params)
     model.fit(X_train, y_train)
 
     # Make predictions
@@ -72,20 +89,29 @@ def example_dt():
     roc_auc = roc_auc_score(y_test, p)
 
     # Save experiment results with kinoa
-    files = ['example.py']
+    files = [
+        'example.py',
+        'example_directory_0',
+        'example_directory_1/example_file_in_directory_1.txt'
+    ]
 
     experiment_name = 'Decision Tree Classifier'
+
+    params = {}
+    for k in model_params:
+        params['dt.' + str(k)] = model_params[k]
 
     scores = {}
     scores['log_loss'] = logloss
     scores['roc_auc'] = roc_auc
-    scores['kaggle'] = 'Unknown'
+    scores['kaggle'] = np.nan
 
     comments = 'Example with Decision Tree Classifier.'
 
     kinoa.save(
         files,
         experiment_name=experiment_name,
+        params=params,
         scores=scores,
         comments=comments,
         update_html_flag=True

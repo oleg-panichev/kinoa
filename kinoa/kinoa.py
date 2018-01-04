@@ -7,16 +7,34 @@ import shutil
 KINOA_DIR = '__kinoa__'
 
 
-def save(files, experiment_name='', scores={}, comments='',
-         update_html_flag=True, working_dir=''):
+def copytree(src, dst, symlinks=False, ignore=None):
+    '''
+    Function to copy directories.
+    '''
+
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
+
+def save(files, experiment_name='', params={}, scores={}, comments='',
+         update_html_flag=False, working_dir=''):
     '''
     Function to save experiment.
     
     Inputs:
         files - list of files to save or string
         experiment_name - name of experiment
+        params - dictionary with experiment parameters
         scores - dictionary with scores
         comments - str with comments
+        update_html_flag - flag
     '''
 
     # Get date time of experiment log
@@ -31,6 +49,12 @@ def save(files, experiment_name='', scores={}, comments='',
                                    ' ' + experiment_name)
         else:
             working_dir = os.path.join(KINOA_DIR, experiment_datetime)
+    else:
+        if experiment_name != experiment_datetime:
+            working_dir = os.path.join(working_dir, KINOA_DIR, experiment_datetime +
+                                   ' ' + experiment_name)
+        else:
+            working_dir = os.path.join(working_dir, KINOA_DIR, experiment_datetime)
 
     if not os.path.exists(working_dir):
         os.makedirs(working_dir)
@@ -38,7 +62,16 @@ def save(files, experiment_name='', scores={}, comments='',
     # Copy files
     if isinstance(files, list):
         for file in files:
-            shutil.copy(file, os.path.join(working_dir, file))
+            print(file)
+            if os.path.isdir(file):
+                copytree(file, os.path.join(working_dir, file))
+            else:
+                file_dir = os.path.dirname(file)
+                if len(file_dir) > 0:
+                    if not os.path.exists(os.path.join(working_dir, file_dir)):
+                        os.makedirs(os.path.join(working_dir, file_dir))
+
+                shutil.copy2(file, os.path.join(working_dir, file))
 
     # Prepare experiment description
     experiment_dict = {
@@ -46,8 +79,10 @@ def save(files, experiment_name='', scores={}, comments='',
         'experiment_datetime': experiment_datetime,
         'comments': comments
     }
+    for k in params.keys():
+        experiment_dict['params.' + str(k)] = params[k]
     for k in scores.keys():
-        experiment_dict[k] = scores[k]
+        experiment_dict['scores.' + str(k)] = scores[k]
 
     # Append experiment to experiments log
     log_fname = os.path.join(KINOA_DIR, 'log.csv')
