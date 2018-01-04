@@ -34,7 +34,8 @@ kinoa.save(
 
 Parameters:
 ```python
-def save(files, experiment_name='', params={}, scores={}, other={}, comments='', working_dir='', sort_log_by='experiment_datetime', sort_log_ascending=True, columns_order=[])
+def save(files, experiment_name='', params={}, scores={}, other={}, comments='', working_dir='',
+         sort_log_by='experiment_datetime', sort_log_ascending=True, columns_order=[])
 ```
 
 - **files** *(list of str)* - List of files and directories to save.
