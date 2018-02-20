@@ -76,7 +76,7 @@ def save(files, experiment_name='', params={}, scores={}, other={},
     # Copy files and directories
     if isinstance(files, list):
         for file in files:
-            print(file)
+            # print(file)
             if os.path.isdir(file):
                 copytree(file, os.path.join(working_dir, file))
             else:
@@ -148,7 +148,8 @@ def save(files, experiment_name='', params={}, scores={}, other={},
     # Reorder columns using user-defined list
     if len(columns_order) > 0:
         if isinstance(columns_order, list):
-            for c in columns_order:
+            keys = list(columns_order.keys())
+            for c in keys:
                 if c in cols_order:
                     cols_order.remove(c)
                 else:
@@ -158,7 +159,8 @@ def save(files, experiment_name='', params={}, scores={}, other={},
 
         elif isinstance(columns_order, dict):
             n_cols = len(cols_order)
-            for c in columns_order.keys():
+            keys = list(columns_order.keys())
+            for c in keys:
                 if c in cols_order:
                     cols_order.remove(c)
                 else:
