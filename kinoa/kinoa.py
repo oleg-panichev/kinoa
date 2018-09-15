@@ -5,8 +5,6 @@ import pandas as pd
 import shutil
 import warnings
 
-KINOA_DIR = '__kinoa__'
-
 
 def copytree(src, dst, symlinks=False, ignore=None):
     '''
@@ -26,8 +24,8 @@ def copytree(src, dst, symlinks=False, ignore=None):
 
 def save(files, experiment_name='', params={}, scores={}, other={}, 
          comments='', update_html_flag=False, working_dir='', 
-         sort_log_by='experiment_datetime', sort_log_ascending=True,
-         columns_order=[]):
+         kinoa_dir_name='__kinoa__', sort_log_by='experiment_datetime', 
+         sort_log_ascending=True, columns_order=[]):
     '''
     Function to save experiment.
     
@@ -39,8 +37,9 @@ def save(files, experiment_name='', params={}, scores={}, other={},
         - scores (dict) - Dictionary with evaluation results.
         - other (dict) - Dictionary with other data needed in log.
         - comments (str) - String with comments to the experiment.
-        - working_dir (str) - Directory where log of experiments will be stored. __kinoa__ directory
+        - working_dir (str) - Path to the directory, where log of experiments will be stored. kinoa_dir_name directory
           will be created within working_dir.
+        - kinoa_dir_name (str) - Name of the directory, where logs will be stored.
         - sort_log_by (str or list of str) - Specify which columns to use to sort rows in the log
           file.
         - sort_log_ascending (bool or list of bool) - Sort ascending vs. descending. Specify list
@@ -59,16 +58,16 @@ def save(files, experiment_name='', params={}, scores={}, other={},
 
     if len(working_dir) == 0:
         if experiment_name != experiment_datetime:
-            working_dir = os.path.join(KINOA_DIR, experiment_datetime +
+            working_dir = os.path.join(kinoa_dir_name, experiment_datetime +
                                    ' ' + experiment_name)
         else:
-            working_dir = os.path.join(KINOA_DIR, experiment_datetime)
+            working_dir = os.path.join(kinoa_dir_name, experiment_datetime)
     else:
         if experiment_name != experiment_datetime:
-            working_dir = os.path.join(working_dir, KINOA_DIR, experiment_datetime +
+            working_dir = os.path.join(working_dir, kinoa_dir_name, experiment_datetime +
                                    ' ' + experiment_name)
         else:
-            working_dir = os.path.join(working_dir, KINOA_DIR, experiment_datetime)
+            working_dir = os.path.join(working_dir, kinoa_dir_name, experiment_datetime)
 
     if not os.path.exists(working_dir):
         os.makedirs(working_dir)
@@ -115,7 +114,7 @@ def save(files, experiment_name='', params={}, scores={}, other={},
         other_cols.append(col_name)
 
     # Append experiment to experiments log
-    log_fname = os.path.join(KINOA_DIR, 'log.csv')
+    log_fname = os.path.join(kinoa_dir_name, 'log.csv')
     if os.path.isfile(log_fname):
         log_df = pd.read_csv(log_fname)
         existing_cols = log_df.columns
